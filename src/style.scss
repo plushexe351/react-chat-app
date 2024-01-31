@@ -9,6 +9,11 @@
     @content;
   }
 }
+@mixin smallerDevice {
+  @media screen and (max-width: 700px) {
+    @content;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -140,6 +145,8 @@
       }
 
       &.visible {
+        margin: 0;
+        border-radius: 0;
         display: flex;
       }
 
@@ -299,6 +306,19 @@
       }
 
       &.visible {
+        // .messages {
+        //   padding-inline: 0.5rem;
+        // }
+        // .chatInfo {
+        //   border-radius: 0;
+        // }
+        // .input {
+        //   border-radius: 0;
+        // }
+        // margin: 0;
+        @include smallerDevice {
+          margin: 0;
+        }
         display: flex !important;
       }
 
@@ -314,6 +334,10 @@
         border-radius: 0.4rem;
         background-color: #1a1a2a;
         color: lightgray;
+
+        @include smallerDevice {
+          border-radius: 0;
+        }
 
         .btn--back {
           padding: 0.5rem;
@@ -350,6 +374,10 @@
         padding: 2rem 0;
         min-height: max-content;
         overflow: scroll;
+
+        @include smallerDevice {
+          padding-inline: 1rem;
+        }
 
         .message {
           flex-direction: column;
@@ -423,6 +451,10 @@
         background-color: #1a1a2a;
         padding: 0.5rem;
         box-shadow: 0 0 6rem black, 0 0 10rem black;
+
+        @include smallerDevice {
+          border-radius: 0;
+        }
         * {
           display: flex;
           align-items: center;
