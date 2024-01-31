@@ -11,7 +11,7 @@ root.render(
   <AuthContextProvider>
     <ChatContextProvider>
       <React.StrictMode>
-        <BrowserRouter basename="/your-subdirectory">
+        <BrowserRouter basename="/">
           <App />
         </BrowserRouter>
       </React.StrictMode>
