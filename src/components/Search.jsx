@@ -11,6 +11,9 @@ import {
   serverTimestamp,
   updateDoc,
   getDoc,
+  orderBy,
+  startAt,
+  endAt,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
@@ -33,8 +36,9 @@ const Search = () => {
     const lowercaseUsername = username.toLowerCase();
     const q = query(
       collection(db, "users"),
-      where("displayName", ">=", lowercaseUsername),
-      where("displayName", "<=", lowercaseUsername + "\uf8ff")
+      orderBy("displayName") || orderBy("searchName"),
+      startAt(lowercaseUsername),
+      endAt(lowercaseUsername + "\uf8ff")
     );
 
     try {
@@ -52,7 +56,7 @@ const Search = () => {
   };
 
   const handleKey = (e) => {
-    e.code == "Enter" && handleSearch();
+    e.code === "Enter" && handleSearch();
   };
 
   const handleSelect = async (founduser) => {
@@ -93,7 +97,8 @@ const Search = () => {
   };
   const handleChange = (e) => {
     setUsername(e.target.value);
-    e.target.value ? handleSearch() : setUser(null);
+    console.log(username);
+    e.target.value ? handleSearch() : setUsername("");
   };
   return (
     <div className="search">

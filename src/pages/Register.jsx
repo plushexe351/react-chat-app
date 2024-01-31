@@ -31,7 +31,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const displayName = e.target[0].value;
+    const displayName = e.target[0].value.toLowerCase().trim();
     const email = e.target[1].value;
     const password = e.target[2].value;
     const selectedFile = img;
@@ -145,6 +145,7 @@ const Register = () => {
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               displayName,
+              searchName: displayName.toLowerCase(),
               email,
               photoURL,
             });
