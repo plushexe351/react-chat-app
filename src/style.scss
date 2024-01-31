@@ -1,0 +1,629 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap");
+
+@font-face {
+  font-family: "dotty";
+  src: url(./dotty/dotty.ttf);
+}
+@mixin smallDevice {
+  @media screen and (max-width: 900px) {
+    @content;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: poppins, Helvetica, sans-serif;
+  transition: 0.2s ease;
+}
+
+.formContainer {
+  background-color: #0e0e17;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(189, 189, 189);
+  .link {
+    margin-inline: 0.2rem;
+    text-decoration: none;
+    color: white;
+  }
+  .formWrapper {
+    background-color: #1a1a2a;
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 0.4rem;
+    width: 400px;
+    max-width: 90vw;
+
+    .logo {
+      font-family: "dotty";
+      color: #5d5d8d;
+      font-weight: 800;
+      font-size: 3rem;
+    }
+    form {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      input {
+        all: unset;
+        width: 100%;
+        padding: 1rem 0rem;
+        text-indent: 1rem;
+        background-color: #0e0e17;
+        border-radius: 0.4rem;
+        &:hover {
+          background-color: #090910;
+        }
+        &:focus {
+          border: 1px solid blueviolet;
+        }
+      }
+      label {
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        gap: 1rem;
+        color: #5d5d8d;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          filter: brightness(0.8);
+        }
+        img {
+          height: 40px;
+          width: 40px;
+        }
+      }
+      input:fill {
+        all: unset;
+      }
+
+      button {
+        all: unset;
+        width: 100%;
+        background-color: blueviolet;
+        color: white;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 5px 1rem rgba(110, 98, 187, 0.25);
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(116, 34, 192);
+        }
+      }
+    }
+    p {
+      text-align: center;
+      color: gray;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.home {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    // border: 1px solid white;
+    // border-radius: 0.4rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+
+    .sidebar {
+      flex: 1;
+      margin: 1rem;
+      display: flex;
+      background-color: #1a1a2a;
+      border-radius: 0.4rem;
+      overflow: hidden;
+
+      &.hidden {
+        display: none;
+      }
+
+      &.visible {
+        display: flex;
+      }
+
+      .sidebarContainer {
+        overflow: scroll;
+        width: 100%;
+        margin: 1.5rem;
+      }
+
+      .navbar {
+        display: flex;
+        padding: 0.5rem;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: max-content;
+        text-align: center;
+        // max-height: 50px;
+        background-color: blueviolet;
+        color: #ddddf7;
+        .btn--log-out {
+          background-color: white;
+          border-radius: 0.4rem;
+          font-size: 0.8rem;
+          // color: #ddddf7;
+          width: max-content;
+          border: none;
+          cursor: pointer;
+          padding: 0.7rem 1rem;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgb(231, 231, 231);
+          }
+        }
+        .user-name {
+          font-family: "dotty";
+          font-size: 1.5rem;
+          width: 70px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .logo {
+          font-family: "dotty";
+          font-size: 2.2rem;
+          font-weight: bold;
+        }
+        .user {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          img {
+            background-color: #ddddf7;
+            height: 40px;
+            width: 40px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            outline-offset: 3px;
+            object-fit: cover;
+            &:hover {
+              filter: brightness(0.7);
+            }
+          }
+        }
+      }
+      .search {
+        // margin: 1rem;
+        border-bottom: 1px solid #5d5d8d9c;
+        max-height: 350px;
+        overflow: scroll;
+        .searchForm {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          align-items: center;
+          padding: 0.2rem 0.5rem;
+          margin-bottom: 1rem;
+          .search-icon {
+            filter: invert(1);
+            height: 15px;
+            cursor: pointer;
+          }
+          input {
+            border-radius: 0.4rem;
+            background-color: #0e0e17;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            color: white;
+            // background-color: transparent;
+            outline: none;
+          }
+        }
+      }
+      .userChat {
+        display: flex;
+        padding: 0.8rem;
+        align-items: center;
+        gap: 1rem;
+        // background-color: #2f2d52;
+        margin-block: 0.5rem;
+        border-radius: 0.8rem;
+        color: lightgray;
+        border-bottom: 1px solid rgba(71, 61, 139, 0.522);
+        box-shadow: inset 0 -5px 3rem rgba(71, 61, 139, 0.322);
+        background: rgba(0, 0, 0, 0.686);
+
+        cursor: pointer;
+        &:hover {
+          background: black;
+        }
+        img {
+          flex-shrink: 0;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .userChatInfo {
+          margin-right: auto;
+          span {
+            font-size: 0.9rem;
+            font-weight: 500;
+          }
+          p {
+            margin-top: 0.3rem;
+            font-size: 0.7rem;
+            color: #5d5d8d;
+          }
+        }
+        .add-friend {
+          font-size: 1rem;
+          padding: 0.2rem 0.5rem;
+          box-shadow: 0 5px 1rem rgba(110, 98, 187, 0.427);
+          border-radius: 0.8rem;
+          background-color: rgb(110, 98, 187);
+          &:hover {
+            background-color: rgb(147, 136, 215);
+            // color: rgb(110, 98, 187);
+          }
+        }
+      }
+    }
+    .chat {
+      flex: 1.5;
+      margin: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      &.hidden {
+        display: none !important;
+      }
+
+      &.visible {
+        display: flex !important;
+      }
+
+      .chatInfo {
+        position: relative;
+        flex-shrink: 0;
+        padding: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.4rem;
+        background-color: #1a1a2a;
+        color: lightgray;
+
+        .btn--back {
+          padding: 0.5rem;
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 1rem;
+          transform: translate(0, -50%);
+          color: #5d5d8d;
+          font-weight: 300;
+          font-size: 1rem;
+          cursor: pointer;
+
+          @include smallDevice {
+            display: unset;
+          }
+        }
+        span {
+          font-family: "dotty";
+          font-size: 2rem;
+        }
+
+        img {
+          object-fit: cover;
+          border-radius: 50%;
+          height: 50px;
+          width: 50px;
+        }
+      }
+
+      .messages {
+        flex: 1;
+        background-color: black;
+        padding: 2rem 0;
+        min-height: max-content;
+        overflow: scroll;
+
+        .message {
+          flex-direction: column;
+          justify-content: flex-end;
+          display: flex;
+
+          &:first-of-type p {
+            border-radius: 0.8rem 0.8rem 0.8rem 5px !important;
+          }
+          &:last-of-type p {
+            border-radius: 5px 0.8rem 0.8rem 0.8rem !important;
+          }
+
+          // &:not(:first-of-type) span {
+          //   display: none !important;
+          // }
+
+          span {
+            font-size: 0.7rem;
+            color: gray;
+            margin-block: 5px;
+          }
+          .messageContent {
+            max-width: 80%;
+            margin-block: 0.2rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: column;
+            p {
+              background-color: white;
+              color: blueviolet;
+              max-width: max-content;
+              padding: 0.5rem 1rem;
+              border-radius: 5px 0.8rem 0.8rem 5px;
+            }
+
+            img {
+              border-radius: 0.4rem;
+              width: 50%;
+            }
+          }
+
+          &.owner {
+            align-items: flex-end;
+            .messageContent {
+              align-items: flex-end;
+            }
+            &:first-of-type p {
+              border-radius: 0.8rem 0.8rem 5px 0.8rem !important;
+            }
+            p {
+              background-color: blueviolet;
+              color: white;
+              border-radius: 0.8rem 5px 5px 0.8rem;
+            }
+
+            &:last-of-type p {
+              border-radius: 0.8rem 5px 0.8rem 0.8rem !important;
+            }
+          }
+        }
+      }
+
+      .input {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+        border-radius: 0.4rem;
+        background-color: #1a1a2a;
+        padding: 0.5rem;
+        box-shadow: 0 0 6rem black, 0 0 10rem black;
+        * {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          border: none;
+        }
+        .file-message {
+          color: #bababa;
+          font-size: 0.6rem;
+          background-color: #0e0e17;
+          border-radius: 0.4rem;
+          width: 200;
+          margin-inline: 1rem;
+          padding: 0.5rem 1rem;
+        }
+        .send {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        input {
+          background-color: inherit;
+          border-radius: 0 0.4rem 0.4rem 0;
+          width: 100%;
+          outline: none;
+          color: white;
+          padding-inline: 1rem;
+        }
+        img {
+          padding: 0.2rem;
+          filter: invert(0.5);
+          cursor: pointer;
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+        button {
+          background-color: rgb(110, 98, 187);
+          box-shadow: 0 5px 1rem rgba(110, 98, 187, 0.427);
+          color: white;
+          padding: 0.8rem;
+          border-radius: 0.4rem;
+          cursor: pointer;
+          &:hover {
+            background-color: rgb(98, 86, 179);
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-profile {
+  position: fixed;
+  display: grid;
+  place-content: center;
+  height: 100%;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0d0d0d70;
+  .modal {
+    display: flex;
+    padding: 1rem;
+    position: relative;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a1a2a;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.266);
+    border-radius: 0.8rem;
+    height: 300px;
+    width: 300px;
+    .profile-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      #profile--email {
+        color: #5d5d8d;
+      }
+      img {
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    button {
+      bottom: 0;
+      background-color: blueviolet;
+      color: white;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border: none;
+      font-size: 0.8rem;
+      border-radius: 0.4rem;
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(118, 38, 193);
+      }
+    }
+  }
+}
+
+.loading-progress {
+  border-radius: 0.4rem;
+  background-color: whitesmoke;
+  height: 100%;
+  animation: fill 2s linear 1;
+  padding: 0.2rem;
+  &.register {
+    animation: fill 6s linear 1;
+  }
+}
+.btn {
+  font-family: "dotty";
+  font-size: 2rem;
+  background-color: transparent;
+  height: 100%;
+  padding: 1rem;
+}
+@keyframes fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.chats h1 {
+  margin: 1rem 0.5rem;
+  letter-spacing: 1px;
+  font-size: 3rem;
+  color: #5d5d8d;
+  font-family: "dotty";
+}
+
+.default-modal {
+  background-color: #1a1a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  height: 100%;
+  border-radius: 0.4rem;
+  .modal-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.8rem;
+  }
+  .chat-icon {
+    object-fit: cover;
+    height: 100px;
+    width: 100px;
+  }
+
+  h2 {
+    font-size: 3rem;
+    text-align: center;
+    font-family: "dotty";
+  }
+
+  .btn--get-started {
+    display: none;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border-radius: 0.8rem;
+    color: blueviolet;
+    margin-block: 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: blueviolet;
+      color: white;
+    }
+    @include smallDevice {
+      display: unset;
+    }
+  }
+}
+
+.fileMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  .fa-icon {
+    color: lightgreen;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .chat {
+    display: none !important;
+  }
+}
