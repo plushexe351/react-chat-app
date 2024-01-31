@@ -14,6 +14,8 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -117,17 +119,19 @@ const Search = () => {
         <div>
           {user.map((foundUser) => (
             <div className="userChat" key={foundUser.uid}>
+              <div
+                className="add-friend"
+                onClick={() => handleSelect(foundUser)}
+              >
+                <FontAwesomeIcon icon={faUserPlus} />
+              </div>
               <img src={foundUser.photoURL} alt="" />
               <div className="userChatInfo">
                 <span>{foundUser.displayName}</span>
               </div>
-              <div
-                className="add-friend"
-                title="Add friend"
-                onClick={() => handleSelect(foundUser)}
-              >
+              {/* <div className="add-friend" title="Add friend">
                 +
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
