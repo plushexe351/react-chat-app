@@ -70,6 +70,9 @@ const Chats = () => {
         <div className="user-profile" onClick={onClose}>
           <div className="modal">
             <h4>{profileOfSelectedUser.displayName}'s Profile</h4>
+            <div className="gradientBg">
+              <img src={profileOfSelectedUser.photoURL} alt="" />
+            </div>
             <div className="profile-info">
               <img src={profileOfSelectedUser.photoURL} alt="" />
               <span id="profile--user-name">
@@ -77,9 +80,12 @@ const Chats = () => {
               </span>
               <span id="profile--email">{profileOfSelectedUser.email}</span>
             </div>
-            <button className="modal-close" onClick={onClose}>
-              close
-            </button>
+            <div className="modal-buttons">
+              <button className="modal-btn modal--follow">Follow</button>
+              <button className="modal-btn modal--close" onClick={onClose}>
+                close
+              </button>
+            </div>
           </div>
         </div>
       )}

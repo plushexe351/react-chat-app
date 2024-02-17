@@ -119,7 +119,11 @@ const Search = () => {
           value={username}
         />
       </div>
-      {err && <span>Something went wrong!</span>}
+      {err && (
+        <span style={{ color: "lightgray", fontSize: "0.7rem" }}>
+          Something went wrong!
+        </span>
+      )}
       {user && (
         <div>
           {user.map((foundUser) => (
@@ -134,9 +138,6 @@ const Search = () => {
               <div className="userChatInfo">
                 <span>{foundUser.displayName}</span>
               </div>
-              {/* <div className="add-friend" title="Add friend">
-                +
-              </div> */}
             </div>
           ))}
         </div>

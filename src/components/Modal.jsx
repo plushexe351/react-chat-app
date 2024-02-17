@@ -8,14 +8,19 @@ const Modal = ({ onClose, children }) => {
     <div className="user-profile" onClick={onClose}>
       <div className="modal">
         <h4>Your Profile</h4>
+        <div className="gradientBg">
+          <img src={currentUser.photoURL} alt="" />
+        </div>
         <div className="profile-info">
           <img src={currentUser.photoURL} alt="" />
           <span id="profile--user-name">{currentUser.displayName}</span>
           <span id="profile--email">{currentUser.email}</span>
         </div>
-        <button className="modal-close" onClick={onClose}>
-          close
-        </button>
+        <div className="modal-buttons">
+          <button className="modal-close" onClick={onClose}>
+            close
+          </button>
+        </div>
       </div>
     </div>
   );
