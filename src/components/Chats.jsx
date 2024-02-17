@@ -1,5 +1,4 @@
 import { doc, onSnapshot } from "firebase/firestore";
-import pfp from "../pfp.jpeg";
 import React, { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
@@ -7,10 +6,11 @@ import { ChatContext } from "../context/ChatContext";
 
 const Chats = () => {
   const { data } = useContext(ChatContext);
-
+  const [isModalOpen, setModalOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+  const [profileOfSelectedUser, setProfileOfSelectedUser] = useState();
 
   useEffect(() => {
     const getChats = () => {
@@ -35,6 +35,15 @@ const Chats = () => {
     console.log();
   };
 
+  const openUserProfileModal = (e, u) => {
+    e.stopPropagation();
+    setProfileOfSelectedUser(u);
+    setModalOpen(true);
+  };
+
+  const onClose = () => {
+    setModalOpen(false);
+  };
   return (
     <div className="chats">
       <h1>Chats</h1>
@@ -46,13 +55,34 @@ const Chats = () => {
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
-            <img src={chat[1].userInfo.photoURL} alt="" />
+            <img
+              src={chat[1].userInfo.photoURL}
+              alt=""
+              onClick={(e) => openUserProfileModal(e, chat[1].userInfo)}
+            />
             <div className="userChatInfo">
               <span>{chat[1].userInfo.displayName}</span>
               <p>{chat[1].lastMessage?.text}</p>
             </div>
           </div>
         ))}
+      {isModalOpen && (
+        <div className="user-profile" onClick={onClose}>
+          <div className="modal">
+            <h4>{profileOfSelectedUser.displayName}'s Profile</h4>
+            <div className="profile-info">
+              <img src={profileOfSelectedUser.photoURL} alt="" />
+              <span id="profile--user-name">
+                {profileOfSelectedUser.displayName}
+              </span>
+              <span id="profile--email">{profileOfSelectedUser.email}</span>
+            </div>
+            <button className="modal-close" onClick={onClose}>
+              close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

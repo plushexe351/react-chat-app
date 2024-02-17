@@ -14,6 +14,22 @@
     @content;
   }
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem; /* width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5d5d8d3e; /* color of the thumb */
+  border-radius: 10px; /* rounded corners */
+}
+
+*::-webkit-scrollbar-track {
+  width: 20px;
+  background-color: transparent; /* color of the track */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -151,7 +167,7 @@
       }
 
       .sidebarContainer {
-        overflow: scroll;
+        overflow: auto;
         width: 100%;
         margin: 1.5rem;
       }
@@ -220,7 +236,11 @@
         // margin: 1rem;
         border-bottom: 1px solid #5d5d8d9c;
         max-height: 350px;
-        overflow: scroll;
+        overflow: auto;
+        .userChat {
+          width: 100%;
+          min-width: max-content;
+        }
         .searchForm {
           display: flex;
           gap: 1rem;
@@ -250,6 +270,9 @@
         padding: 0.8rem;
         align-items: center;
         gap: 1rem;
+        width: 100%;
+        // min-width: max-content;
+        // overflow-x: scroll;
         // background-color: #2f2d52;
         margin-block: 0.5rem;
         border-radius: 0.8rem;
@@ -271,7 +294,9 @@
         }
 
         .userChatInfo {
-          margin-right: auto;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           span {
             font-size: 0.9rem;
             font-weight: 500;
@@ -283,10 +308,10 @@
           }
         }
         .add-friend {
-          font-size: 0.8rem;
+          font-size: 0.7rem;
           padding: 0.5rem 0.7rem;
           box-shadow: 0 5px 1rem rgba(110, 98, 187, 0.427);
-          border-radius: 0.8rem;
+          border-radius: 0.6rem;
           background-color: rgb(110, 98, 187);
           &:hover {
             background-color: rgb(147, 136, 215);
@@ -525,6 +550,7 @@
     gap: 0.5rem;
     flex-direction: column;
     align-items: center;
+    color: white;
     justify-content: space-between;
     background-color: #1a1a2a;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.266);
@@ -590,7 +616,6 @@
     width: 100%;
   }
 }
-
 .chats h1 {
   margin: 1rem 0.5rem;
   letter-spacing: 1px;
