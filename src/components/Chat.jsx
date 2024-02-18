@@ -1,14 +1,36 @@
 import React, { useContext, useState, useEffect } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
-import pfp from "../pfp.jpeg";
 import { ChatContext } from "../context/ChatContext";
+import Modal from "./Modal";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Chat = () => {
+  const [chatCount, setChatCount] = useState(0);
+  const [selectedUserChats, setSelectedUserChats] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
   const { data } = useContext(ChatContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
   const { dispatch } = useContext(ChatContext);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const openUserProfileModal = () => {
+    setModalOpen(true);
+  };
+  useEffect(() => {
+    if (data.user?.uid) {
+      const unsub = onSnapshot(doc(db, "userChats", data.user?.uid), (doc) => {
+        setSelectedUserChats(doc.data());
+        setChatCount(Object.keys(doc.data() || {}).length);
+      });
 
+      return () => {
+        unsub();
+      };
+    }
+  }, [data.user]);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 900);
@@ -42,12 +64,21 @@ const Chat = () => {
                 "https://freepngimg.com/save/130401-t-letter-free-download-png-hq/512x512"
               }
               alt=""
+              onClick={openUserProfileModal}
             />
             <span>@{data.user?.displayName}</span>
           </div>
 
           <Messages />
           <Input />
+          {isModalOpen && (
+            <Modal
+              onClose={closeModal}
+              userProfile={data.user}
+              chatCount={chatCount}
+              // chatCount={chatCount}
+            />
+          )}
         </>
       ) : (
         <div className="default-modal">

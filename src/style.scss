@@ -319,6 +319,10 @@
           height: 50px;
           border-radius: 50%;
           object-fit: cover;
+          &:hover {
+            opacity: 0.7;
+            transform: scale(0.9);
+          }
           @include smallestDevice {
             width: 30px;
             height: 30px;
@@ -418,6 +422,10 @@
           border-radius: 50%;
           height: 50px;
           width: 50px;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.7;
+          }
         }
       }
 

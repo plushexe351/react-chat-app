@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import pfp from "../pfp.jpeg";
 import { db } from "../firebase";
 import {
@@ -14,11 +14,13 @@ import {
   orderBy,
   startAt,
   endAt,
+  onSnapshot,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import Modal from "./Modal";
 
 const Search = () => {
   const [username, setUsername] = useState("");
@@ -58,7 +60,6 @@ const Search = () => {
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
   };
-
   const handleSelect = async (founduser) => {
     dispatch({ type: "TOGGLE_CHAT_VISIBILITY" });
 
