@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 
-const Modal = ({ onClose, userProfile, chatCount }) => {
+const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
   console.log(`this is ${chatCount}`);
   const { dispatch } = useContext(ChatContext);
   const currentUserContext = useContext(AuthContext);
   const currentUser = userProfile || currentUserContext.currentUser;
   const isAnotherUser = userProfile !== currentUserContext.currentUser;
+
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
     dispatch({ type: "TOGGLE_CHAT_VISIBILITY" });
@@ -32,7 +33,7 @@ const Modal = ({ onClose, userProfile, chatCount }) => {
           </div>
         </div>
         <div className="modal-buttons">
-          {isAnotherUser && (
+          {isAnotherUser && showMessageBtn !== false && (
             <button
               className="modal-btn modal--follow"
               onClick={() => handleSelect(currentUser)}

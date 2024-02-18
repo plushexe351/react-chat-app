@@ -76,6 +76,7 @@ const Chat = () => {
               onClose={closeModal}
               userProfile={data.user}
               chatCount={chatCount}
+              showMessageBtn={false}
               // chatCount={chatCount}
             />
           )}
