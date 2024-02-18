@@ -43,7 +43,7 @@ const Chat = () => {
               }
               alt=""
             />
-            <span>{data.user?.displayName}</span>
+            <span>@{data.user?.displayName}</span>
           </div>
 
           <Messages />

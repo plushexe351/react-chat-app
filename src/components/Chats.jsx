@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import Modal from "./Modal";
 
 const Chats = () => {
   const { data } = useContext(ChatContext);
@@ -10,7 +11,9 @@ const Chats = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-  const [profileOfSelectedUser, setProfileOfSelectedUser] = useState();
+  const [profileOfSelectedUser, setProfileOfSelectedUser] = useState({});
+  const [selectedUserChats, setSelectedUserChats] = useState([]);
+  const [chatCount, setChatCount] = useState(0);
 
   useEffect(() => {
     const getChats = () => {
@@ -25,6 +28,22 @@ const Chats = () => {
 
     currentUser.uid && getChats();
   }, [currentUser.uid]);
+
+  useEffect(() => {
+    if (profileOfSelectedUser.uid) {
+      const unsub = onSnapshot(
+        doc(db, "userChats", profileOfSelectedUser.uid),
+        (doc) => {
+          setSelectedUserChats(doc.data());
+          setChatCount(Object.keys(doc.data() || {}).length);
+        }
+      );
+
+      return () => {
+        unsub();
+      };
+    }
+  }, [profileOfSelectedUser]);
 
   console.log(Object.entries(chats));
 
@@ -41,9 +60,10 @@ const Chats = () => {
     setModalOpen(true);
   };
 
-  const onClose = () => {
+  const closeModal = () => {
     setModalOpen(false);
   };
+
   return (
     <div className="chats">
       <h1>Chats</h1>
@@ -67,27 +87,11 @@ const Chats = () => {
           </div>
         ))}
       {isModalOpen && (
-        <div className="user-profile" onClick={onClose}>
-          <div className="modal">
-            <h4>{profileOfSelectedUser.displayName}'s Profile</h4>
-            <div className="gradientBg">
-              <img src={profileOfSelectedUser.photoURL} alt="" />
-            </div>
-            <div className="profile-info">
-              <img src={profileOfSelectedUser.photoURL} alt="" />
-              <span id="profile--user-name">
-                {profileOfSelectedUser.displayName}
-              </span>
-              <span id="profile--email">{profileOfSelectedUser.email}</span>
-            </div>
-            <div className="modal-buttons">
-              <button className="modal-btn modal--follow">Follow</button>
-              <button className="modal-btn modal--close" onClick={onClose}>
-                close
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          onClose={closeModal}
+          userProfile={profileOfSelectedUser}
+          chatCount={chatCount}
+        />
       )}
     </div>
   );
