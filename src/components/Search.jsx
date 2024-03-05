@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import pfp from "../pfp.jpeg";
+
 import { db } from "../firebase";
 import {
   collection,

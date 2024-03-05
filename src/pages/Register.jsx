@@ -7,6 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChatContext } from "../context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import tanjiropfp from "../assets/tanjiropfp.jpg";
+import saitamapfp from "../assets/saitamapfp.jpg";
+import batmanpfp from "../assets/batmanpfp.jpg";
+import narutopfp from "../assets/narutopfp.jpeg";
+import luffypfp from "../assets/luffypfp.jpeg";
 
 import userEvent from "@testing-library/user-event";
 
@@ -202,9 +207,11 @@ const Register = () => {
 
   const getRandomImageURL = () => {
     const randomImages = [
-      "https://cdn2.iconfinder.com/data/icons/super-hero/154/batman-comics-hero-avatar-head-mask-512.png",
-      "https://www.iconarchive.com/download/i141855/iconarchive/cute-animal/Cute-Penguin.1024.png",
-      "https://images.vexels.com/media/users/3/202526/isolated/preview/1c2ebd49adf69af3336b073db877bb3b-black-cat-avatar-cartoon-icon.png",
+      narutopfp,
+      luffypfp,
+      batmanpfp,
+      saitamapfp,
+      tanjiropfp,
       // Add more image URLs as needed
     ];
     const randomIndex = Math.floor(Math.random() * randomImages.length);
