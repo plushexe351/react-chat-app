@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import Modal from "./Modal";
+import Modal from "./UserProfileModal";
 
 const Chats = () => {
   const { data } = useContext(ChatContext);
@@ -34,7 +34,6 @@ const Chats = () => {
       const unsub = onSnapshot(
         doc(db, "userChats", profileOfSelectedUser.uid),
         (doc) => {
-          setSelectedUserChats(doc.data());
           setChatCount(Object.keys(doc.data() || {}).length);
         }
       );
@@ -57,6 +56,7 @@ const Chats = () => {
   const openUserProfileModal = (e, u) => {
     e.stopPropagation();
     setProfileOfSelectedUser(u);
+    console.log("profile of su:", profileOfSelectedUser);
     setModalOpen(true);
   };
 

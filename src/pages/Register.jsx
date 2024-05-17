@@ -13,13 +13,11 @@ import batmanpfp from "../assets/batmanpfp.jpg";
 import narutopfp from "../assets/narutopfp.jpeg";
 import luffypfp from "../assets/luffypfp.jpeg";
 
-import userEvent from "@testing-library/user-event";
-
 const Register = () => {
   const { dispatch } = useContext(ChatContext);
   const [img, setImg] = useState("");
   const [fileMessage, setFileMessage] = useState("");
-  const [err, setErr] = useState(false);
+  const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false); // New state for loader
   const navigate = useNavigate();
 
@@ -41,8 +39,12 @@ const Register = () => {
     const password = e.target[2].value;
     const selectedFile = img;
 
-    // Check if the username has at least 2 digits
-    if (!/\d{2,}/.test(displayName)) {
+    // Check username length and if it has at least 2 digits
+    if (displayName.length > 20) {
+      setErr("Username cannot exceed 16 characters");
+      return;
+    }
+    if (displayName.length < 5 || !/\d{2,}/.test(displayName)) {
       setErr("Username must have at least 5 characters and 2 digits");
       return;
     }
@@ -238,15 +240,27 @@ const Register = () => {
               {fileMessage}
             </div>
           )}
-          <input type="text" placeholder="username" name="" id="" />
-          <input type="email" placeholder="email" name="" id="" />
-          <input type="password" placeholder="password" name="" id="" />
+          <input
+            type="text"
+            placeholder="username"
+            name="username"
+            id="username"
+            // maxLength={16} // Restrict username length
+          />
+          <input type="email" placeholder="email" name="email" id="email" />
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            id="password"
+          />
           <input
             type="file"
-            name=""
+            name="avatar"
             id="file"
             style={{ display: "none" }}
             onChange={handleFileChange}
+            accept="image/*" // Restrict to only accept image files
           />
           <button disabled={loading}>
             {loading ? (

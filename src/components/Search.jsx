@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import Modal from "./UserProfileModal";
 import { db } from "../firebase";
 import {
   collection,
@@ -20,16 +20,26 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal";
 
 const Search = () => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
-
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [chatCount, setChatCount] = useState(0);
+  const [profileOfSelectedUser, setProfileOfSelectedUser] = useState({});
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
+  const openUserProfileModal = (e, u) => {
+    e.stopPropagation();
+    setProfileOfSelectedUser(u);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   const changeUser = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
   };
@@ -60,9 +70,25 @@ const Search = () => {
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
   };
+
+  useEffect(() => {
+    if (profileOfSelectedUser.uid) {
+      const unsub = onSnapshot(
+        doc(db, "userChats", profileOfSelectedUser.uid),
+        (doc) => {
+          setChatCount(Object.keys(doc.data() || {}).length);
+        }
+      );
+
+      return () => {
+        unsub();
+      };
+    }
+  }, [profileOfSelectedUser]);
+
   const handleSelect = async (founduser) => {
     dispatch({ type: "TOGGLE_CHAT_VISIBILITY" });
-
+    setProfileOfSelectedUser(founduser);
     const combinedId =
       currentUser.uid > founduser.uid
         ? currentUser.uid + founduser.uid
@@ -135,10 +161,21 @@ const Search = () => {
               >
                 <FontAwesomeIcon icon={faUserPlus} />
               </div>
-              <img src={foundUser.photoURL} alt="" />
+              <img
+                src={foundUser.photoURL}
+                alt=""
+                onClick={(e) => openUserProfileModal(e, foundUser)}
+              />
               <div className="userChatInfo">
                 <span>{foundUser.displayName}</span>
               </div>
+              {isModalOpen && (
+                <Modal
+                  onClose={closeModal}
+                  userProfile={profileOfSelectedUser}
+                  chatCount={chatCount}
+                />
+              )}
             </div>
           ))}
         </div>

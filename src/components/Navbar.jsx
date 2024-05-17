@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Modal from "./Modal"; // Assuming you have a Modal component
+import Modal from "./UserProfileModal"; // Assuming you have a Modal component
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";

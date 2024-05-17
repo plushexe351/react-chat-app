@@ -69,6 +69,11 @@
     max-width: 90vw;
     max-height: 90vh;
 
+    @include smallestDevice {
+      min-height: 100vh;
+      min-width: 100vw;
+    }
+
     .logo {
       font-family: "dotty";
       color: blueviolet;
@@ -90,7 +95,7 @@
         width: 100%;
         padding: 1rem 0rem;
         @include smallestDevice {
-          font-size: 0.7rem;
+          font-size: 0.9rem;
         }
         text-indent: 1rem;
         background-color: #0e0e17;
@@ -126,6 +131,7 @@
       button {
         all: unset;
         width: 100%;
+
         background-color: blueviolet;
         color: white;
         border-radius: 0.4rem;
@@ -133,6 +139,11 @@
         text-align: center;
         box-shadow: 0 5px 1rem rgba(110, 98, 187, 0.25);
         cursor: pointer;
+        div {
+          @include smallestDevice {
+            font-size: 1.8rem;
+          }
+        }
         &:hover {
           background-color: rgb(116, 34, 192);
         }
@@ -217,8 +228,8 @@
           cursor: pointer;
           padding: 0.7rem 1rem;
           @include smallestDevice {
-            // padding: 0.5rem;
-            font-size: 1.1rem;
+            padding: 0.8rem 1rem;
+            font-size: 1.4rem;
           }
           cursor: pointer;
 
@@ -229,7 +240,7 @@
         .user-name {
           font-size: 0.9rem;
           @include smallestDevice {
-            font-size: 0.6rem;
+            font-size: 0.8rem;
           }
           width: 70px;
           overflow: hidden;
@@ -295,14 +306,14 @@
       }
       .userChat {
         display: flex;
-        padding: 0.7rem;
+        padding: 1rem;
         align-items: center;
         gap: 1rem;
         width: 100%;
         // min-width: max-content;
         // overflow-x: scroll;
         // background-color: #2f2d52;
-        margin-block: 0.5rem;
+        margin-block: 0.3rem;
         border-radius: 0.8rem;
         color: lightgray;
         border-bottom: 1px solid rgba(71, 61, 139, 0.522);
@@ -321,7 +332,6 @@
           object-fit: cover;
           &:hover {
             opacity: 0.7;
-            transform: scale(0.9);
           }
           @include smallestDevice {
             width: 30px;
@@ -336,7 +346,7 @@
           span {
             font-size: 0.9rem;
             @include smallestDevice {
-              font-size: 0.7em;
+              font-size: 0.8em;
             }
             font-weight: 500;
           }
@@ -582,14 +592,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.495);
-  backdrop-filter: blur(3rem);
-  -webkit-backdrop-filter: blur(3rem);
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
   z-index: 9;
-  .modal {
+  .modal,
+  .edit-profile-form {
+    // border: 1px solid red;
+    padding: 1rem 1.5rem;
     position: relative;
     display: flex;
     // padding: 1rem;
-    gap: 0.5rem;
+    // gap: 0.5rem;
     flex-direction: column;
     align-items: center;
     color: white;
@@ -598,61 +611,108 @@
     background-color: #1a1a2a;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.266);
     border-radius: 0.8rem;
-    min-height: 300px;
-    height: 70vh;
-    max-height: 70vh;
+    min-height: 350px;
+    height: max-content;
+    max-height: 700px;
+
     min-width: 290px;
     width: 400px;
     max-width: 90vw;
     overflow: hidden;
-    .gradientBg {
-      position: absolute;
-      // top: 0;
-      // height: 45%;
-      // width: 100%;
-      // background: rgb(247, 247, 247);
-      overflow: hidden;
-      img {
-        display: none;
-        width: 200%;
-        object-fit: cover;
-        object-position: center;
-        height: 150%;
-        filter: blur(4rem) brightness(0.5);
-      }
+    @include smallerDevice {
+      border-radius: 0;
+      min-height: 100vh;
+      min-width: 100vw;
     }
     h4 {
       z-index: 10;
-      margin: 1rem;
+      margin: 0.3rem;
+      @include smallestDevice {
+        font-size: 0.9rem;
+      }
     }
-    .profile-info {
+    .profile-info,
+    .edit-profile-field {
+      width: 100%;
+      text-align: left;
       z-index: 10;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       justify-content: center;
       align-items: center;
+      span {
+        @include smallestDevice() {
+          font-size: 0.9em;
+        }
+      }
+      input {
+        all: unset;
+        width: 100%;
+        padding: 1rem 0rem;
+        @include smallestDevice {
+          font-size: 0.7rem;
+        }
+        text-indent: 1rem;
+        background-color: #0e0e17;
+        border-radius: 0.4rem;
+        &:hover {
+          background-color: #090910;
+        }
+        &:focus {
+          border: 1px solid blueviolet;
+        }
+      }
+      .text-label {
+        align-self: flex-start;
+      }
+      label {
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        gap: 1rem;
+        color: #5d5d8d;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        @include smallestDevice {
+          font-size: 0.9rem;
+        }
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
       .stats {
         font-style: italic;
+        @include smallestDevice {
+          font-size: 0.9rem;
+        }
       }
       .largeText {
         font-size: 3rem;
         margin-right: 0.5rem;
         color: magenta;
+        @include smallestDevice {
+          font-size: 2.5rem;
+        }
       }
       #profile--email {
         color: #5d5d8d;
       }
       img {
+        margin: 1rem;
         background-color: white;
-        height: 70px;
-        width: 70px;
+        height: 120px;
+        width: 120px;
         border-radius: 50%;
         outline: 1px solid #ddddf7a3;
         outline-offset: 3px;
         object-fit: cover;
+        @include smallestDevice {
+          margin: 0.3rem;
+        }
       }
     }
     .modal-buttons {
@@ -670,11 +730,14 @@
       color: white;
       min-width: 100px;
       flex: 3;
-      padding: 0.7rem 1rem;
+      padding: 1rem 0rem;
       border: none;
       font-size: 1.7rem;
       border-radius: 0.4rem;
       cursor: pointer;
+      @include smallestDevice {
+        font-size: 1.5rem;
+      }
       &.modal--close {
         flex: 1;
         background-color: magenta;

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
-import Modal from "./Modal";
+import Modal from "./UserProfileModal";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -77,7 +77,6 @@ const Chat = () => {
               userProfile={data.user}
               chatCount={chatCount}
               showMessageBtn={false}
-              // chatCount={chatCount}
             />
           )}
         </>
