@@ -1,9 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { storage, auth, db } from "../firebase"; // Adjust this import based on your firebase config file location
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -11,9 +17,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
   const { dispatch } = useContext(ChatContext);
   const [fileMessage, setFileMessage] = useState("");
-  const [newBio, setNewBio] = useState("");
+  const [bio, setBio] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [newDisplayName, setNewDisplayName] = useState("");
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Loading state for form submission
   const [err, setErr] = useState(null); // Error state
@@ -21,6 +26,22 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
   const currentUser = userProfile || currentUserContext.currentUser;
   const isAnotherUser = userProfile !== currentUserContext.currentUser;
 
+  useEffect(() => {
+    const fetchBio = async () => {
+      if (currentUser && currentUser.uid) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+          if (userDoc.exists()) {
+            setBio(userDoc.data().bio || "");
+          }
+        } catch (error) {
+          console.error("Error fetching bio:", error);
+        }
+      }
+    };
+
+    fetchBio();
+  }, [currentUser]);
   const handleEditClick = (e) => {
     e.stopPropagation(); // Prevent modal from closing
     setEditMode(true);
@@ -227,7 +248,6 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
               defaultValue={currentUser.displayName}
               name="username-change"
               id="username-change-field"
-              onChange={(e) => setNewDisplayName(e.target.value)}
             />
             <label htmlFor="bio-change-field" className="text-label">
               Bio
@@ -235,10 +255,9 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
             <input
               type="text"
               placeholder="Write a bio ✨"
-              defaultValue={currentUser.bio}
+              defaultValue={currentUser.bio || bio}
               name="bio-change"
               id="bio-change-field"
-              onChange={(e) => setNewBio(e.target.value)}
             />
           </div>
 
@@ -278,7 +297,9 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
               onClick={!isAnotherUser ? handleEditClick : null}
             >
               {currentUser.bio ||
-                (!isAnotherUser ? "Write a bio ✨" : "New user 😈")}
+                bio ||
+                (!isAnotherUser && "Write a bio ✨") ||
+                "New user 😈"}
             </span>
             <span id="profile--bio"></span>
             <div className="stats">
