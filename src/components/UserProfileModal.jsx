@@ -12,7 +12,16 @@ import {
 } from "firebase/firestore";
 import { storage, auth, db } from "../firebase"; // Adjust this import based on your firebase config file location
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowAltCircleLeft,
+  faCheck,
+  faClose,
+  faImage,
+  faMessage,
+  faPencil,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
   const { dispatch } = useContext(ChatContext);
@@ -217,122 +226,143 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
 
   return (
     <div className="user-profile">
-      {editMode && (
-        <form onSubmit={handleSubmit} className="edit-profile-form">
-          <h4>{currentUser.displayName}'s profile settings</h4>
-          <div className="edit-profile-field">
-            <label htmlFor="self-profile-image">
-              <img src={currentUser.photoURL} alt="" />
-              <p>Change profile image</p>
-            </label>
-            {fileMessage && (
-              <div className="fileMessage">
-                {" "}
-                <FontAwesomeIcon className="fa-icon" icon={faCheck} />
-                {fileMessage}
+      <AnimatePresence>
+        {editMode && (
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 80 }}
+            transition={{ ease: "linear", duration: 0.1 }}
+          >
+            <form onSubmit={handleSubmit} className="edit-profile-form">
+              <h4>{currentUser.displayName}'s profile settings</h4>
+              <div className="edit-profile-field">
+                <label htmlFor="self-profile-image">
+                  <img src={currentUser.photoURL} alt="" />
+                  <FontAwesomeIcon icon={faImage} />
+                  <p>Edit Avatar</p>
+                </label>
+                {fileMessage && (
+                  <div className="fileMessage">
+                    {" "}
+                    <FontAwesomeIcon className="fa-icon" icon={faCheck} />
+                    {fileMessage}
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="self-profile-image"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                  accept="image/*" // Restrict to only accept image files
+                />
+                <label htmlFor="username-change-field" className="text-label">
+                  <FontAwesomeIcon icon={faUser} />
+                  Username
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter new username"
+                  defaultValue={currentUser.displayName}
+                  name="username-change"
+                  id="username-change-field"
+                />
+                <label htmlFor="bio-change-field" className="text-label">
+                  <FontAwesomeIcon icon={faPencil} />
+                  Bio
+                </label>
+                <input
+                  type="text"
+                  placeholder="Write a bio ✨"
+                  defaultValue={currentUser.bio || bio}
+                  name="bio-change"
+                  id="bio-change-field"
+                />
               </div>
-            )}
-            <input
-              type="file"
-              id="self-profile-image"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              accept="image/*" // Restrict to only accept image files
-            />
-            <label htmlFor="username-change-field" className="text-label">
-              Username
-            </label>
-            <input
-              type="text"
-              placeholder="Enter new username"
-              defaultValue={currentUser.displayName}
-              name="username-change"
-              id="username-change-field"
-            />
-            <label htmlFor="bio-change-field" className="text-label">
-              Bio
-            </label>
-            <input
-              type="text"
-              placeholder="Write a bio ✨"
-              defaultValue={currentUser.bio || bio}
-              name="bio-change"
-              id="bio-change-field"
-            />
-          </div>
 
-          {err && (
-            <div style={{ color: "magenta" }} className="error-message">
-              {err}
-            </div>
-          )}
+              {err && (
+                <div style={{ color: "magenta" }} className="error-message">
+                  {err}
+                </div>
+              )}
 
-          <div className="modal-buttons">
-            <button
-              type="submit"
-              className="modal-btn modal--follow"
-              disabled={isLoading}
-            >
-              {isLoading ? "Saving..." : "Save changes"}
-            </button>
-            <button
-              type="button"
-              className="modal-btn modal--close"
-              onClick={() => setEditMode(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      )}
-      {!editMode && (
-        <div className="modal" onClick={stopPropagation}>
-          <h4>{currentUser.displayName}'s profile</h4>
+              <div className="modal-buttons">
+                <button
+                  type="submit"
+                  className="modal-btn modal--follow"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Saving..." : "Save"}
+                </button>
+                <button
+                  type="button"
+                  className="modal-btn modal--close"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        )}
 
-          <div className="profile-info">
-            <img src={currentUser.photoURL} alt="" />
-            <span id="profile--user-name">@{currentUser.displayName}</span>
-            <span
-              id="profile--email"
-              onClick={!isAnotherUser ? handleEditClick : null}
-            >
-              {currentUser.bio ||
-                bio ||
-                (!isAnotherUser && "Write a bio ✨") ||
-                "New user 😈"}
-            </span>
-            <span id="profile--bio"></span>
-            <div className="stats">
-              <div className="friends">
-                <span className="largeText">{chatCount}</span>
-                Connections
+        {!editMode && (
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 80 }}
+            transition={{ ease: "linear", duration: 0.1 }}
+          >
+            <div className="modal" onClick={stopPropagation}>
+              <h4>{currentUser.displayName}'s profile</h4>
+
+              <div className="profile-info">
+                <img src={currentUser.photoURL} alt="" />
+                <span id="profile--user-name">@{currentUser.displayName}</span>
+                <span
+                  id="profile--email"
+                  onClick={!isAnotherUser ? handleEditClick : null}
+                >
+                  {currentUser.bio ||
+                    bio ||
+                    (!isAnotherUser && "Write a bio ✨") ||
+                    "New user 😈"}
+                </span>
+                <span id="profile--bio"></span>
+                <div className="stats">
+                  <div className="friends">
+                    <span className="largeText">{chatCount}</span>
+                    Connections
+                  </div>
+                </div>
+              </div>
+              <div className="modal-buttons">
+                {isAnotherUser && showMessageBtn !== false && (
+                  <button
+                    className="modal-btn modal--follow"
+                    onClick={() => handleSelect(currentUser)}
+                  >
+                    Message
+                  </button>
+                )}
+                {!isAnotherUser && (
+                  <button
+                    className="modal-btn modal--follow"
+                    onClick={handleEditClick}
+                  >
+                    <FontAwesomeIcon icon={faPencil} />
+                    Edit
+                  </button>
+                )}
+
+                <button className="modal-btn modal--close" onClick={onClose}>
+                  Done
+                </button>
               </div>
             </div>
-          </div>
-          <div className="modal-buttons">
-            {isAnotherUser && showMessageBtn !== false && (
-              <button
-                className="modal-btn modal--follow"
-                onClick={() => handleSelect(currentUser)}
-              >
-                Message
-              </button>
-            )}
-            {!isAnotherUser && (
-              <button
-                className="modal-btn modal--follow"
-                onClick={handleEditClick}
-              >
-                Edit profile
-              </button>
-            )}
-
-            <button className="modal-btn modal--close" onClick={onClose}>
-              Done
-            </button>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

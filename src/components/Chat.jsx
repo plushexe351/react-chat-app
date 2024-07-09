@@ -5,6 +5,8 @@ import { ChatContext } from "../context/ChatContext";
 import Modal from "./UserProfileModal";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
+import WritingTools from "./WritingTools";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Chat = () => {
   const [chatCount, setChatCount] = useState(0);
@@ -13,12 +15,16 @@ const Chat = () => {
   const { data } = useContext(ChatContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
   const { dispatch } = useContext(ChatContext);
+  const { writingToolsMode } = useContext(ChatContext);
+
   const closeModal = () => {
     setModalOpen(false);
   };
+
   const openUserProfileModal = () => {
     setModalOpen(true);
   };
+
   useEffect(() => {
     if (data.user?.uid) {
       const unsub = onSnapshot(doc(db, "userChats", data.user?.uid), (doc) => {
@@ -31,6 +37,7 @@ const Chat = () => {
       };
     }
   }, [data.user]);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 900);
@@ -70,6 +77,18 @@ const Chat = () => {
           </div>
 
           <Messages />
+          <AnimatePresence>
+            {writingToolsMode && (
+              <motion.div
+                initial={{ opacity: 0, y: 80 }}
+                animate={{ opacity: 1, y: 50 }}
+                exit={{ opacity: 0, y: 80 }}
+                transition={{ ease: "linear", duration: 0.2 }}
+              >
+                <WritingTools />
+              </motion.div>
+            )}
+          </AnimatePresence>
           <Input />
           {isModalOpen && (
             <Modal

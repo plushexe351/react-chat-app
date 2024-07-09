@@ -169,16 +169,16 @@ const Search = () => {
               <div className="userChatInfo">
                 <span>{foundUser.displayName}</span>
               </div>
-              {isModalOpen && (
-                <Modal
-                  onClose={closeModal}
-                  userProfile={profileOfSelectedUser}
-                  chatCount={chatCount}
-                />
-              )}
             </div>
           ))}
         </div>
+      )}
+      {isModalOpen && (
+        <Modal
+          onClose={closeModal}
+          userProfile={profileOfSelectedUser}
+          chatCount={chatCount}
+        />
       )}
     </div>
   );

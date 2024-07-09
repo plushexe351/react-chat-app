@@ -18,6 +18,9 @@ const Messages = () => {
     };
   });
 
+  const lastMessage = messages[messages.length - 1];
+  const aiRefMessage = lastMessage;
+
   return (
     <div className="messages">
       {messages.map((m) => (
