@@ -435,6 +435,7 @@
     .chat {
       position: relative;
       flex: 1.5;
+      max-width: 100%;
 
       display: flex;
       flex-direction: column;
@@ -486,9 +487,6 @@
         span {
           // font-family: "dotty";
           font-size: 1rem;
-          @include smallestDevice {
-            font-size: 1.7rem;
-          }
         }
 
         img {
