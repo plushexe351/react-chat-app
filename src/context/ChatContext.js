@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  useReducer,
-} from "react";
+import React, { createContext, useState, useContext, useReducer } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import userEvent from "@testing-library/user-event";
 import { AuthContext } from "./AuthContext";
 
 export const ChatContext = createContext();
@@ -21,6 +14,9 @@ export const ChatContextProvider = ({ children }) => {
   };
 
   const [writingToolsMode, setWritingToolsMode] = useState(false);
+  const [aiRefMsg, setAiRefMsg] = useState("");
+  const [resultGlobal, setResultGlobal] = useState("");
+  const [text, setText] = useState("");
 
   const chatReducer = (state, action) => {
     switch (action.type) {
@@ -49,6 +45,12 @@ export const ChatContextProvider = ({ children }) => {
         dispatch,
         writingToolsMode,
         setWritingToolsMode,
+        aiRefMsg,
+        setAiRefMsg,
+        resultGlobal,
+        setResultGlobal,
+        text,
+        setText,
       }}
     >
       {children}

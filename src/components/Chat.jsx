@@ -80,10 +80,10 @@ const Chat = () => {
           <AnimatePresence>
             {writingToolsMode && (
               <motion.div
-                initial={{ opacity: 0, y: 80 }}
+                initial={{ opacity: 1, y: 80 }}
                 animate={{ opacity: 1, y: 50 }}
-                exit={{ opacity: 0, y: 80 }}
-                transition={{ ease: "linear", duration: 0.2 }}
+                exit={{ opacity: 1, y: 80 }}
+                transition={{ ease: "easeOut", duration: 0.2 }}
               >
                 <WritingTools />
               </motion.div>

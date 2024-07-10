@@ -12,6 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../context/ChatContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -22,6 +24,7 @@ const Navbar = () => {
 
   const toggleWritingTools = () => {
     setWritingToolsMode(!writingToolsMode);
+    // toast.success("Open a chat to get started with Ai tools");
   };
 
   const handleProfileClick = () => {
@@ -50,6 +53,16 @@ const Navbar = () => {
   return (
     <div className="navbar">
       {/* <span className="logo">Twixt Chat</span> */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="user" onClick={handleProfileClick}>
         <img src={currentUser.photoURL} alt="" />
         <span className="user-name">Profile</span>

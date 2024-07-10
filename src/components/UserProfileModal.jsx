@@ -229,10 +229,10 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
       <AnimatePresence>
         {editMode && (
           <motion.div
-            initial={{ opacity: 0, y: 80 }}
+            initial={{ opacity: 1, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 80 }}
-            transition={{ ease: "linear", duration: 0.1 }}
+            exit={{ opacity: 1, y: 80 }}
+            transition={{ ease: "easeOut", duration: 0.1 }}
           >
             <form onSubmit={handleSubmit} className="edit-profile-form">
               <h4>{currentUser.displayName}'s profile settings</h4>
@@ -308,10 +308,10 @@ const Modal = ({ onClose, userProfile, chatCount, showMessageBtn }) => {
 
         {!editMode && (
           <motion.div
-            initial={{ opacity: 0, y: 80 }}
+            initial={{ opacity: 1, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 80 }}
-            transition={{ ease: "linear", duration: 0.1 }}
+            exit={{ opacity: 1, y: 80 }}
+            transition={{ ease: "easeOut", duration: 0.1 }}
           >
             <div className="modal" onClick={stopPropagation}>
               <h4>{currentUser.displayName}'s profile</h4>

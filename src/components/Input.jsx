@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import Attach from "../attach.png";
+import React, { useContext, useEffect, useState } from "react";
+import Attach from "../assets/attach.png";
 import {
   Timestamp,
   arrayUnion,
@@ -16,12 +16,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Input = () => {
-  const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const [fileMessage, setFileMessage] = useState("");
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   const { writingToolsMode, setWritingToolsMode } = useContext(ChatContext);
+  const { text, setText } = useContext(ChatContext);
 
   const toggleWritingTools = () => {
     setWritingToolsMode(!writingToolsMode);
@@ -41,7 +41,9 @@ const Input = () => {
   const handleKeyDown = (e) => {
     e.code === "Enter" && handleSend();
   };
-
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
   const handleSend = async () => {
     setText("");
 
@@ -83,7 +85,6 @@ const Input = () => {
         }),
       });
     }
-
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
@@ -169,8 +170,8 @@ const Input = () => {
         type="text"
         placeholder="Type something..."
         name=""
-        id=""
-        onChange={(e) => setText(e.target.value)}
+        id="send-message"
+        onChange={(e) => handleChange(e)}
         value={text}
         onKeyDown={handleKeyDown}
       />

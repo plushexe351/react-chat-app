@@ -44,19 +44,14 @@ const Chats = () => {
     }
   }, [profileOfSelectedUser]);
 
-  console.log(Object.entries(chats));
-
   const handleSelect = (u) => {
     dispatch({ type: "CHANGE_USER", payload: u });
     dispatch({ type: "TOGGLE_CHAT_VISIBILITY" });
-    console.log(data.isChatVisible);
-    console.log();
   };
 
   const openUserProfileModal = (e, u) => {
     e.stopPropagation();
     setProfileOfSelectedUser(u);
-    console.log("profile of su:", profileOfSelectedUser);
     setModalOpen(true);
   };
 
