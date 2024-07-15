@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faL, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 
@@ -92,7 +92,10 @@ const WritingTools = () => {
       }
       // return text;
     } catch (error) {
+      setLoading(false);
       console.error(error);
+      setResult(error);
+      setResultGlobal(error);
     }
     msg = "";
   };
