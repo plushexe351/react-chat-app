@@ -79,10 +79,15 @@ const WritingTools = () => {
     try {
       const result = await chat.sendMessageStream(msg);
       let text = "";
-
-      for await (const chunk of result.stream) {
-        const chunkText = chunk.text();
-        text += chunkText;
+      try {
+        for await (const chunk of result.stream) {
+          const chunkText = chunk.text();
+          text += chunkText;
+        }
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        setResultGlobal(error);
       }
       appendToChatHistory("model", text);
       if (msg.trim() !== "") {
@@ -95,6 +100,7 @@ const WritingTools = () => {
       setLoading(false);
       console.error(error);
       setResult(error);
+      setResultGlobal(error);
     }
     msg = "";
   };
