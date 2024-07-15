@@ -5,6 +5,7 @@ import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY;
 
 const WritingTools = () => {
   const { writingToolsMode, setWritingToolsMode } = useContext(ChatContext);
@@ -55,9 +56,7 @@ const WritingTools = () => {
     });
   }
 
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyBM4VjictreZGjd4NplDnb06ETrImsAKxU"
-  );
+  const genAI = new GoogleGenerativeAI(geminiApiKey);
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
@@ -73,7 +72,7 @@ const WritingTools = () => {
       (messageType.toLowerCase() === "new message"
         ? query +
           `\nMessage Mood : ${messageMood}\nMessage Mode : ${messageType}`
-        : aiRefMsg.text.trim() + `\nAdditional: ${query}`) +
+        : aiRefMsg?.text.trim() + `\nAdditional: ${query}`) +
       `Message Mood : ${messageMood}\nMessage Mode : ${messageType}`;
     appendToChatHistory("user", msg);
 
